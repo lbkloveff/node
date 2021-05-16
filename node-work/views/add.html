@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增数据</title>
+    <link rel="stylesheet" href="/stylesheets/login.css"/>
+</head>
+<body>
+    <div id="login-box">
+        <h1>添加学生信息</h1>
+        <form method="POST" action="/add">
+            <div class="form">
+                <div class="item">
+                   <i class="fa fa-github-alt" style="font-size:24px"></i>
+                   <span style="color: rgb(20, 157, 220);"></span> <input type="text" name="user" value="<%=obj.name %>" placeholder="姓名">		   
+                </div>
+                <div class="item">
+                    <i class="fa fa-github-alt" style="font-size:24px"></i>
+                    <span style="color: rgb(20, 157, 220);"></span> <input type="text" name="age" value="<%=obj.age %>" placeholder="年龄">		   
+                 </div>
+                 <div class="item">
+                    <i class="fa fa-github-alt" style="font-size:24px"></i>
+                    <span style="color: rgb(20, 157, 220);"></span> <input type="text" name="sex" value="<%=obj.sex %>" placeholder="性别">		   
+                 </div>
+                <div class="item">
+                   <i class="fa fa-search" style="font-size:24px"></i>
+                   <span style="color:  rgb(20, 157, 220);"></span> <input type="number" name="s1" value="<%=obj.s1 %>" placeholder="语文">		   
+                </div>
+                <div class="item">
+                    <i class="fa fa-search" style="font-size:24px"></i>
+                    <span style="color: rgb(20, 157, 220);"></span> <input type="number" name="s2" value="<%=obj.s2 %>" placeholder="数学">		   
+                 </div>
+                 <div class="item">
+                    <i class="fa fa-search" style="font-size:24px"></i>
+                    <span style="color: rgb(20, 157, 220);"></span> <input type="number" name="s3" value="<%=obj.s3 %>" placeholder="英语">		   
+                 </div>
+                 <button type="submit">提交</button>
+                </form>
+                <button id="cancel">取消</button>
+               </div>
+               
+</body>
+</html>
