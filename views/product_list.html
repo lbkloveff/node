@@ -37,7 +37,7 @@
 <body>
 <!--header-->
 <header>
- <h1><img src="images/admin_logo.png"/></h1>
+ <h1><img src="/images/admin_logo.png"/></h1>
  <ul class="rt_nav">
   <li><a href="http://XXX" target="_blank" class="website_icon">站点首页</a></li>
   <li><a href="#" class="clear_icon">清除缓存</a></li>
@@ -114,8 +114,10 @@
         <option>下拉菜单</option>
         <option>菜单1</option>
        </select>
-       <input type="text" class="textbox textbox_225" placeholder="输入产品关键词或产品货号..."/>
-       <input type="button" value="查询" class="group_btn"/>
+       <form method="POST" action="/product_list/select">
+          <input type="text" class="textbox textbox_225" placeholder="输入产品关键词或产品货号..." id="all_v"/>
+          <input type="button" value="查询" class="group_btn" id="select"/>
+       </form>
       </section>
       <table class="table">
       <thead>
@@ -131,23 +133,6 @@
       <tbody id="t_body">
 
       </tbody>
-       
-       <!-- <tr>
-        <td class="center"><img src="/images/goods02.jpg" width="50" height="50"/></td>
-        <td>这里是产品名称</td>
-        <td class="center">A15902</td>
-        <td class="center"><strong class="rmb_icon">59.00</strong></td>
-        <td class="center">包</td>
-        <td class="center"><a title="是" class="link_icon">&#89;</a></td>
-        <td class="center"><a title="否" class="link_icon">&#88;</a></td>
-        <td class="center"><a title="是" class="link_icon">&#89;</a></td>
-        <td class="center">5559</td>
-        <td class="center">
-         <a href="http://XXX" title="预览" class="link_icon" target="_blank">&#118;</a>
-         <a href="product_detail.html" title="编辑" class="link_icon">&#101;</a>
-         <a href="#" title="删除" class="link_icon">&#100;</a>
-        </td>
-       </tr> -->
       </table>
       <aside class="paging">
        <a>第一页</a>
@@ -161,11 +146,13 @@
  </div>
 </section>
 <script>
-     $.ajax({
+     function load(){
+          $.ajax({
           type:"get",
           url:"/product_list/get_list",
           async:false,
           success:function(data){
+               $('#t_body').empty();
                for(var i in data){
                     $("#t_body").append(`<tr>
                          <td class="center">${data[i].id}</td>
@@ -182,7 +169,10 @@
                }
           }
      })
+     }
+     load();
 
+//删除
      $('#t_body').delegate(".del","click",function(){
           $.ajax({
                type:"post",
@@ -190,11 +180,40 @@
                data:{"id":$(this).data("id")},
                success:function(data){
                     if(data.result=="yes"){
-                         alert("success delete")
+                         alert("success delete");
+                        load();
                     }
                }
           })
      })
+
+//查询
+$('#select').click(function(){
+     $.ajax({
+          type:"post",
+          url:"/product_list/select",
+          data:{"all_v":$("#all_v").val()},
+          success:function(data){
+          alert("success select")
+          $('#t_body').empty();
+               for(var i in data){
+                    $("#t_body").append(`<tr>
+                         <td class="center">${data[i].id}</td>
+                         <td class="center">${data[i].product_name}</td>
+                         <td class="center">${data[i].supplier_id}</td>
+                         <td class="center">${data[i].price}</td>
+                         <td class="center">${data[i].inventory}</td>
+                         <td class="center">
+                              <input type="button" value="删除" class="link_icon del" data-id=${data[i].id} id="del_button">
+                              <input type="button" value="编辑" class="link_icon" id="update_button">
+                         </td>
+                         </tr>
+                    `)
+               }
+          }
+     })
+})
+
 </script>
 <script src="/javascripts/task.js"></script>
 </body>

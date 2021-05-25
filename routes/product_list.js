@@ -8,7 +8,6 @@ router.get('/', (req, res)=>{
 
 router.get("/get_list",function(req,res){
   var query='select * from product_info';
-  console.log(query);
   connection.query(query,function(err,rows){
     if(err){
       console.log(err);
@@ -72,6 +71,19 @@ router.post('/update',function(req,res){
     res.redirect("/product_list")
   })
 }) 
+
+//查询
+router.post('/select',function(req,res){
+  var all=req.body.all_v;
+  var query='select * from product_info where concat(id,product_name,supplier_id,price,inventory) like "%'+all+'%"'
+  
+  connection.query(query,function(err,rows){
+    if(err){
+      console.log(err);
+    }
+    res.send(rows)
+  })
+})
 
 
 module.exports = router;
