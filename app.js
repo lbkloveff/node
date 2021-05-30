@@ -27,6 +27,7 @@ var product_listRouter=require('./routes/product_list');
 var updateRouter=require('./routes/update');
 var order_listRouter=require('./routes/order_list');
 var order_updateRouter=require('./routes/order_update');
+var order_detailRouter=require('./routes/order_detail');
 
 var app = express();
 
@@ -34,7 +35,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views')); 
 app.engine('.html',ejs.__express);
 app.set('view engine', 'html');
-// app.set('view engine', 'ejs');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -45,14 +46,13 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie:{ 
-      maxAge: 60000
+      maxAge: 1000*60*60*24
   }
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/login',loginRouter);
 app.use('/reg',regRouter);
-// app.use('/',teacherRouter);
 app.use('/address',addressRouter);
 app.use('/user',userRouter);
 app.use('/book',bookRouter);
@@ -71,6 +71,36 @@ app.use('/product_list',product_listRouter);
 app.use('/update',updateRouter);
 app.use('/order_list',order_listRouter)
 app.use('/order_update',order_updateRouter);
+app.use('/order_detail',order_detailRouter);
+
+//登录拦截
+// app.use(function (req, res, next) {
+//   var logger = log4js.getLogger("intercept");
+//   if (req.session.user) {
+//       //用户登录过
+//       next();
+//   } else {
+//       //解析用户请求路径
+//       var arr = req.url.split('/');
+//       logger.info('请求路径拆分：' + JSON.stringify(arr));
+//       //去除get请求携带的参数
+//       for (var i = 0; i < arr.length; i++) {
+//           arr[i] = arr[i].split('?')[0];
+//       }
+
+//       if (arr.length > 1) {
+//           if (arr[1] === 'adminlogin' || arr[1] === 'adminlogout' || arr[1] === 'login_commit'||arr[1] === 'video') {
+//               next();
+//           } else {
+//               logger.error('intercept：用户未登录执行登录拦截，路径为：' + arr[1]);
+//               res.redirect('/adminlogin');  // 将用户重定向到登录页面
+//               res.end();
+//           }
+//       }
+//   }
+
+
+// });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
