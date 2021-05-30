@@ -17,7 +17,7 @@ router.get("/get_list",function(req,res){
   })
 })
 
-// 新增
+//新增
 router.get("/addpage",(req,res)=>{
   res.render("add")
 });
@@ -28,7 +28,7 @@ router.post('/add',function(req,res){
   var supplier_id=req.body.supplier_id;
   var price=req.body.price;
   var inventory=req.body.inventory;
-  connection.query('insert into product_info(id,product_name,supplier_id,price,inventory) values(" '+id+'"," '+product_name+'"," '+supplier_id+'"," '+price+'"," '+inventory+'")',function(err,rws){
+  connection.query('insert into product_info(id,product_name,supplier_id,price,inventory) values(" '+id+'"," '+product_name+'"," '+supplier_id+'"," '+price+'"," '+inventory+'")',function(err,rows){
     if(err){
       console.log(err);
       return;
@@ -52,9 +52,9 @@ router.post("/del",function(req,res){
 })
 
 //修改
-router.get("/up",(req,res)=>{
-  res.render("update")
-});
+// router.get("/up",(req,res)=>{
+//   res.render("update")
+// });
 
 router.post('/update',function(req,res){
   var id=req.body.uid;

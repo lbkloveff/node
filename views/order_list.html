@@ -37,7 +37,7 @@
 <body>
 <!--header-->
 <header>
- <h1><img src="/images/admin_logo.png"/></h1>
+ <h1><img src="images/admin_logo.png"/></h1>
  <ul class="rt_nav">
   <li><a href="http://XXX" target="_blank" class="website_icon">站点首页</a></li>
   <li><a href="#" class="clear_icon">清除缓存</a></li>
@@ -64,7 +64,7 @@
    <dl>
     <dt>订单信息</dt>
     <dd><a href="/order_list">订单列表示例</a></dd>
-    <dd><a href="order_detail.html">订单详情示例</a></dd>
+    <dd><a href="/order_detail">订单详情示例</a></dd>
    </dl>
   </li>
   <!-- <li>
@@ -105,34 +105,37 @@
 <section class="rt_wrap content mCustomScrollbar">
  <div class="rt_content">
       <div class="page_title">
-       <h2 class="fl">商品列表示例</h2>
-       <!-- <a href="product_detail.html" class="fr top_rt_btn add_icon">添加商品</a> -->
-       <input type="button" class="fr top_rt_btn add_icon" value="添加商品" id="add_button" onclick="add_button()">
+       <h2 class="fl">订单列表示例</h2>
+       <input type="button" class="fr top_rt_btn add_icon" value="添加订单信息" id="add_order_list" onclick="add_order_list()">
       </div>
       <section class="mtb">
        <select class="select">
-        <option>下拉菜单</option>
-        <option>菜单1</option>
+        <option>订单状态</option>
+        <option>待付款</option>
+        <option>待发货</option>
+        <option>待评价</option>
        </select>
-       <form method="POST" action="/product_list/select">
-          <input type="text" class="textbox textbox_225" placeholder="输入产品关键词或产品货号..." id="all_v"/>
-          <input type="button" value="查询" class="group_btn" id="select"/>
-       </form>
+       <input type="text" class="textbox textbox_225" placeholder="输入订单编号或收件人姓名/电话..." id="all_v"/>
+       <input type="button" value="查询" class="group_btn" id="select"/>
       </section>
       <table class="table">
-      <thead>
+       <thead>
           <tr>
-               <td>货号</td>
-               <td>产品名称</td>
-               <td>供应商号</td>
-               <td>单价</td>
-               <td>库存</td>
+               <td>订单编号</td>
+               <td>收件人</td>
+               <td>联系电话</td>
+               <td>收件人地址</td>
+               <td>订单金额</td>
+               <td>配送方式</td>
                <td>操作</td>
-              </tr>
-      </thead>
-      <tbody id="t_body">
+          </tr>
+       </thead>
 
-      </tbody>
+       <tbody id="t_body">
+
+       </tbody>
+
+
       </table>
       <aside class="paging">
        <a>第一页</a>
@@ -149,34 +152,35 @@
      function load(){
           $.ajax({
           type:"get",
-          url:"/product_list/get_list",
+          url:"/order_list/get_list",
           async:false,
           success:function(data){
                $('#t_body').empty();
                for(var i in data){
                     $("#t_body").append(`<tr>
                          <td class="center">${data[i].id}</td>
-                         <td class="center">${data[i].product_name}</td>
-                         <td class="center">${data[i].supplier_id}</td>
-                         <td class="center">${data[i].price}</td>
-                         <td class="center">${data[i].inventory}</td>
+                         <td class="center">${data[i].re_name}</td>
+                         <td class="center">${data[i].tel}</td>
+                         <td class="center">${data[i].address}</td>
+                         <td class="center">${data[i].order_money}</td>
+                         <td class="center">${data[i].distrit}</td>
                          <td class="center">
                               <input type="button" value="删除" class="link_icon del" data-id=${data[i].id} id="del_button">
-                              <input type="button" value="编辑" class="link_icon" data-id=${data[i].id} id="update_button" onclick="update()">
+                              <input type="button" value="编辑" class="link_icon" id="order_update_button" onclick="order_update()">
                          </td>
                          </tr>
                     `)
                }
           }
-     })
+          })
      }
      load();
 
-//删除
+     //删除
      $('#t_body').delegate(".del","click",function(){
           $.ajax({
                type:"post",
-               url:"/product_list/del",
+               url:"/order_list/del",
                data:{"id":$(this).data("id")},
                success:function(data){
                     if(data.result=="yes"){
@@ -187,11 +191,11 @@
           })
      })
 
-//查询
-$('#select').click(function(){
+     //查询
+     $('#select').click(function(){
      $.ajax({
           type:"post",
-          url:"/product_list/select",
+          url:"/order_list/select",
           data:{"all_v":$("#all_v").val()},
           success:function(data){
           alert("success select")
@@ -199,10 +203,11 @@ $('#select').click(function(){
                for(var i in data){
                     $("#t_body").append(`<tr>
                          <td class="center">${data[i].id}</td>
-                         <td class="center">${data[i].product_name}</td>
-                         <td class="center">${data[i].supplier_id}</td>
-                         <td class="center">${data[i].price}</td>
-                         <td class="center">${data[i].inventory}</td>
+                         <td class="center">${data[i].re_name}</td>
+                         <td class="center">${data[i].tel}</td>
+                         <td class="center">${data[i].address}</td>
+                         <td class="center">${data[i].order_money}</td>
+                         <td class="center">${data[i].distrit}</td>
                          <td class="center">
                               <input type="button" value="删除" class="link_icon del" data-id=${data[i].id} id="del_button">
                               <input type="button" value="编辑" class="link_icon" id="update_button">
@@ -213,7 +218,6 @@ $('#select').click(function(){
           }
      })
 })
-
 </script>
 <script src="/javascripts/task.js"></script>
 </body>

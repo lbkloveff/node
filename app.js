@@ -23,13 +23,15 @@ var searchRouter=require('./routes/search');
 var shopcarRouter=require('./routes/shopcar');
 var aboutRouter=require('./routes/about');
 var indexRouter=require('./routes/index');
-var product_listRouter=require('./routes/product_list')
-
+var product_listRouter=require('./routes/product_list');
+var updateRouter=require('./routes/update');
+var order_listRouter=require('./routes/order_list');
+var order_updateRouter=require('./routes/order_update');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views')); 
 app.engine('.html',ejs.__express);
 app.set('view engine', 'html');
 // app.set('view engine', 'ejs');
@@ -66,6 +68,9 @@ app.use('/shopcar',shopcarRouter);
 app.use('/about',aboutRouter);
 app.use('/index',indexRouter);
 app.use('/product_list',product_listRouter);
+app.use('/update',updateRouter);
+app.use('/order_list',order_listRouter)
+app.use('/order_update',order_updateRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
