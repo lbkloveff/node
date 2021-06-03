@@ -73,8 +73,8 @@ router.post('/order_update',function(req,res){
   var address=req.body.naddress;
   var order_money=req.body.norder_money;
   var distrit=req.body.ndistrit
-  var query='update order_list set re_name="'+re_name+'" , tel="'+tel+'" , address="'+address+'" , order_money="'+order_money+'" ,distrit=" '+distrit+' "  where id = '+id+'';
-  connection.query(query,function(err,rows){
+  var query='update order_list set id="'+id+'" , re_name="'+re_name+'" , tel="'+tel+'" , address="'+address+'" , order_money="'+order_money+'" ,distrit=" '+distrit+' "  where id = '+id+'';
+  connection.query(query,function(err,rows){ 
     if(err){
       console.log(err);
       return;
