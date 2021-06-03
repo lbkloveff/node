@@ -165,7 +165,7 @@
                          <td class="center">${data[i].distrit}</td>
                          <td class="center">
                               <input type="button" value="删除" class="link_icon del" data-id=${data[i].id} id="del_button">
-                              <input type="button" value="编辑" class="link_icon" id="order_update_button" onclick="order_update()">
+                              <input type="button" value="编辑" class="link_icon up" id="order_update_button" onclick="order_update()" data-id=${data[i].id} data-re_name=${data[i].re_name} data-tel=${data[i].tel} data-address=${data[i].address} data-order_money=${data[i].order_money} data-distrit=${data[i].distrit}>
                          </td>
                          </tr>
                     `)
@@ -209,7 +209,7 @@
                          <td class="center">${data[i].distrit}</td>
                          <td class="center">
                               <input type="button" value="删除" class="link_icon del" data-id=${data[i].id} id="del_button">
-                              <input type="button" value="编辑" class="link_icon" id="update_button">
+                              <input type="button" value="编辑" class="link_icon up" id="order_update_button" data-id=${data[i].id} data-re_name=${data[i].re_name} data-tel=${data[i].tel} data-address=${data[i].address} data-order_money=${data[i].order_money} data-distrit=${data[i].distrit}>
                          </td>
                          </tr>
                     `)
@@ -217,6 +217,21 @@
           }
      })
 })
+//修改回显
+$("#t_body").delegate(".up","click",function(){
+     $.ajax({
+         type:"post",
+         url :"/order_update/up_post_orderdata",
+         data:{"id":$(this).data("id"),"re_name":$(this).data("re_name"),"tel":$(this).data("tel"),"address":$(this).data("address"),"order_money":$(this).data("order_money"),"distrit":$(this).data("distrit")} ,
+         success:function(data){
+              if(data.status == 1){
+               window.location = "/order_update"
+              }
+         }
+     })
+     
+})
+
 </script>
 <script src="/javascripts/task.js"></script>
 </body>

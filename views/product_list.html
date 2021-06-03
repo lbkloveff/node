@@ -161,7 +161,7 @@
                          <td class="center">${data[i].inventory}</td>
                          <td class="center">
                               <input type="button" value="删除" class="link_icon del" data-id=${data[i].id} id="del_button">
-                              <input type="button" value="编辑" class="link_icon" data-id=${data[i].id} id="update_button" onclick="update()">
+                              <input type="button" value="编辑" class="link_icon up"onclick="update()" data-id=${data[i].id} data-product_name=${data[i].product_name} data-supplier_id=${data[i].supplier_id} data-price=${data[i].price} data-inventory=${data[i].inventory}>
                          </td>
                          </tr>
                     `)
@@ -179,7 +179,6 @@
                data:{"id":$(this).data("id")},
                success:function(data){
                     if(data.result=="yes"){
-                         alert("success delete");
                         load();
                     }
                }
@@ -193,7 +192,6 @@ $('#select').click(function(){
           url:"/product_list/select",
           data:{"all_v":$("#all_v").val()},
           success:function(data){
-          alert("success select")
           $('#t_body').empty();
                for(var i in data){
                     $("#t_body").append(`<tr>
@@ -204,7 +202,7 @@ $('#select').click(function(){
                          <td class="center">${data[i].inventory}</td>
                          <td class="center">
                               <input type="button" value="删除" class="link_icon del" data-id=${data[i].id} id="del_button">
-                              <input type="button" value="编辑" class="link_icon" id="update_button">
+                              <input type="button" value="编辑" class="link_icon up" onclick="update()" data-id=${data[i].id} data-product_name=${data[i].product_name} data-supplier_id=${data[i].supplier_id} data-price=${data[i].price} data-inventory=${data[i].inventory}>
                          </td>
                          </tr>
                     `)
@@ -213,7 +211,23 @@ $('#select').click(function(){
      })
 })
 
+//回显
+$("#t_body").delegate(".up","click",function(){
+     $.ajax({
+         type:"post",
+         url :"/update/up_post_data",
+         data:{"id":$(this).data("id"),"product_name":$(this).data("product_name"),"supplier_id":$(this).data("supplier_id"),"price":$(this).data("price"),"inventory":$(this).data("inventory")} ,
+         success:function(data){
+              if(data.status == 1){
+               window.location = "/update"
+              }
+         }
+     })
+     
+})
+
 </script>
+
 <script src="/javascripts/task.js"></script>
 </body>
 </html>

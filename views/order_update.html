@@ -6,35 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>修改订单信息</title>
     <link rel="stylesheet" href="/stylesheets/login.css"/>
+    <script src="/javascripts/jquery.js"></script>
 </head>
 <body>
     <div id="login-box">
         <h1>添加商品信息</h1>
-        <form method="POST" action="/order_list/add_order">
+        <form method="POST" action="/order_list/order_update">
             <div class="form">
                 <div class="item">
                    <i class="fa fa-github-alt" style="font-size:24px"></i>
-                   <span style="color: rgb(20, 157, 220);">订单编号：</span> <input type="text" name="nid"  placeholder="订单编号">		   
+                   <span style="color: rgb(20, 157, 220);">订单编号：</span> <input type="text" name="nid"  placeholder="订单编号" id="hid">		   
                 </div>
                 <div class="item">
                     <i class="fa fa-github-alt" style="font-size:24px"></i>
-                    <span style="color: rgb(20, 157, 220);">收件人：</span> <input type="text" name="nre_name"  placeholder="收件人">		   
+                    <span style="color: rgb(20, 157, 220);">收件人：</span> <input type="text" name="nre_name"  placeholder="收件人" id="hre_name">		   
                  </div>
                  <div class="item">
                     <i class="fa fa-github-alt" style="font-size:24px"></i>
-                    <span style="color: rgb(20, 157, 220);">联系人：</span> <input type="text" name="ntel"  placeholder="联系人">		   
+                    <span style="color: rgb(20, 157, 220);">联系电话：</span> <input type="text" name="ntel"  placeholder="联系人" id="htel">		   
                  </div>
                 <div class="item">
                    <i class="fa fa-search" style="font-size:24px"></i>
-                   <span style="color:  rgb(20, 157, 220);">地址：</span> <input type="text" name="naddress" placeholder="地址">		   
+                   <span style="color:  rgb(20, 157, 220);">地址：</span> <input type="text" name="naddress" placeholder="地址" id="haddress">		   
                 </div>
                 <div class="item">
                     <i class="fa fa-search" style="font-size:24px"></i>
-                    <span style="color: rgb(20, 157, 220);">订单金额：</span> <input type="number" name="norder_money"  placeholder="订单金额">		   
+                    <span style="color: rgb(20, 157, 220);">订单金额：</span> <input type="number" name="norder_money"  placeholder="订单金额" id="horder_money">		   
                  </div>
                  <div class="item">
                     <i class="fa fa-search" style="font-size:24px"></i>
-                    <span style="color: rgb(20, 157, 220);">配送方式：</span> <input type="text" name="ndistrit"  placeholder="配送方式">		   
+                    <span style="color: rgb(20, 157, 220);">配送方式：</span> <input type="text" name="ndistrit"  placeholder="配送方式" id="hdistrit">		   
                  </div>
                  <button type="submit">提交</button>
                  <!-- <input type="submit" value="提交"  -->
@@ -44,3 +45,18 @@
                
 </body>
 </html>
+<script>
+   $.ajax({
+       type:"get",
+       url :"/order_update/up_get_orderdata",
+       success:function(data){
+           console.log(data);
+    $("#hid").val(data.id);
+    $("#hre_name").val(data.re_name);
+    $("#htel").val(data.tel);
+    $("#haddress").val(data.address);
+    $("#horder_money").val(data.order_money);
+    $("#hdistrit").val(data.distrit);
+       }
+   })
+</script>

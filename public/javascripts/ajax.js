@@ -221,21 +221,10 @@
 
     
     $("button[type=submit]").click(function(){
-        if(!flog1){
+        if(!flog1 || !flog2 || !flog3 || !flog4){
+            alert("注册失败,检查格式是否正确");
             return;
         }
-        if(!flog2){
-            return;
-        }
-        if(!flog3){
-            return;
-        }
-        if(!flog4){
-            return;
-        }
-        // if(!flog5){
-        //     return;
-        // }
     
          $.ajax({ 
              type:"post", 
