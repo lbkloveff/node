@@ -11,6 +11,7 @@
     user.onblur=function(){
     var username=user.value;
     //去除前后空白
+    
     var username=username.trim();
 
     var regExp=/^[\u4e00-\u9fa5]+$/;//多个连续中文
