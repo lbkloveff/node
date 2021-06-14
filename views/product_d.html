@@ -9,6 +9,7 @@
 <script type="text/javascript" src="/javascripts/base.js"></script>
 <script type="text/javascript" src="/javascripts/js_z.js"></script>
 <link rel="stylesheet" type="text/css" href="/stylesheets/thems.css">
+<script src="/javascripts/jquery.js"></script>
 
 </head>
 
@@ -135,52 +136,60 @@
 <script type="text/javascript" src="/javascripts/lib.js"></script>
 <script type="text/javascript" src="/javascripts/zzsc.js"></script>
             <div class="pro_dar">
-                <h1>D000498 女戒</h1>
-                <table cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td>货号：HC0008131</td>
-                    <td>18K金重：2.36g</td>
-                    <td>PT金重：3.36g</td>
-                  </tr>
-                  <tr>
-                    <td>主石：0.195ct</td>
-                    <td>副石：无副石</td>
-                    <td>&nbsp;</td>
-                  </tr>
-                </table>
-                <div class="lei">
-                	<a href="/login">18K金</a>
+                <script>
+                    $.ajax({
+                        type:"get",
+                        url:"/product_d/get_list",
+                        async:false,
+                        success:function(data){
+                            console.log(data);
+                            for(var i in data){
+                                $(".pro_dar").append(`<h1>${data[i].product_name}</h1>
+                                <table cellpadding="0" cellspacing="0">
+                                  <tr>
+                                    <td>货号：${data[i].product_id}</td>
+                                    <td>18K金重：${data[i].k_weight}</td>
+                                    <td>PT金重：${data[i].pt_weight}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>主石：${data[i].main_store}</td>
+                                    <td>副石：${data[i].deputy_syore}</td>
+                                    <td>&nbsp;</td>
+                                  </tr>
+                                </table>
+                                <div class="lei">
+                    <a href="/login">18K金</a>
                     <a href="/login" class="xz">PT950</a>
-                </div>
-                <ul class="ra clearfix">
-                	<li class="clearfix">
-                    	<span class="title">手寸：</span>
-                        <div class="li_m cc">
-                        	<div class="xz_z">
-                            	<span>20</span>
-                                <em>&nbsp;</em>
-                            </div>
-                            <ul>
-                            	<li>16</li>
-                                <li>17</li>
-                                <li>18</li>
-                                <li>19</li>
-                                <li>20</li>
-                                <li>21</li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-                    	<span class="title">数量：</span>
-                        <div class="li_m num clearfix">
-                        	<span class="pn">&nbsp;</span>
-                            <input name="" type="text" value="1">
-                            <span class="an">&nbsp;</span>
-                        </div>
-                    </li>
-                </ul>
-                <div class="price">￥：18500</div>
-                <div class="scar"><a href="/login">加入购物车</a></div>
+               </div>
+               <ul class="ra clearfix">
+                   <li class="clearfix">
+                   <span class="title">手寸：</span>
+                   <div class="li_m cc">
+               <div class="xz_z">
+                   <span>20</span>
+                   <em>&nbsp;</em>
+                   </div>
+               <ul>
+                <li>16</li>
+                <li>17</li>
+                <li>18</li>
+                <li>19</li>
+                <li>20</li>
+                <li>21</li>
+              </ul>
+              </div>
+              </li>
+              <li class="clearfix">
+              <span class="title">数量：</span>
+           <div class="li_m num clearfix">
+              <span class="pn">&nbsp;</span>
+              <input name="" type="text" value="1">
+              <span class="an">&nbsp;</span>
+           </div>
+        </li>
+        </ul>
+            <div class="price">￥：${data[i].price}</div>
+            <div class="scar"><a href="/login">加入购物车</a></div>
             </div>
         </div>
         <div class="space_hx">&nbsp;</div>
@@ -191,6 +200,12 @@
             </div>
         </div>
     </div>
+                                `)
+                            }
+                        }
+                    })
+                </script>
+                
 </div>
 <div class="space_hx">&nbsp;</div>
 <!--底部-->
@@ -198,5 +213,6 @@
 	<p>Copyright 2015 © 珠宝交易平台 All rights reserved. <a href="/login">最新公告</a> | <a href="/login">联系我们</a></p>
 </div>
 <!--底部-->
+
 </body>
 </html>

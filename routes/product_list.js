@@ -7,7 +7,7 @@ router.get('/', (req, res)=>{
   });
 
 router.get("/get_list",function(req,res){
-  var query='select * from product_info';
+  var query='select * from product_info order by id desc';
   connection.query(query,function(err,rows){
     if(err){
       console.log(err);

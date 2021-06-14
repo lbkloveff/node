@@ -92,7 +92,6 @@
 </div>
 <!--底部-->
 <script>
-
         $.ajax({
         type:"get",
         url:"/product/get_list",
@@ -102,7 +101,7 @@
             for(var i in data ){
                 $("#pic")[0].innerHTML += `
                     <li>
-                        <a href="/product_d">
+                        <a href="/product_d/">
                             <img src="${data[i].product_pic}" alt=""/>
                             <p>${data[i].product_name}</p>
                         </a>

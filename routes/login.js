@@ -38,7 +38,7 @@ router.post('/',(req,res,next) => {
      }
      req.session.userSign=true;
      req.session.username=user.name;
-     res.redirect('/login')
+     res.redirect('/product')
    });
 
 });
